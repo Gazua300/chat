@@ -1,0 +1,60 @@
+body{
+    display: flex;
+    justify-content: center;
+}
+
+form{
+    margin-top: 10vh;
+    font-size: 15pt;
+}
+
+fieldset{
+    width: 30vw;
+    line-height: 7vh;
+    padding: 20px;
+    box-shadow: 3px 3px 6px;
+
+    @media(max-width: 600px){
+        width: 80vw;
+        text-align: center;
+        line-height: 15vh;
+        padding: 10px;
+    }
+}
+
+legend{
+    font-size: 1.5em;
+    text-align: center;
+}
+
+label{
+    @media(max-width: 600px){
+        display: none;
+    }
+}
+
+input{
+    width: 80%;
+    height: 30px;
+    font-size: 13pt;
+    padding-left: 10px;
+}
+
+button{
+    width: 50%;
+    height: 30px;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+
+    @media(max-width: 600px){
+        left: 25%;
+    }
+}
+
+button:hover{
+    background-color: gray;
+    color: white;
+}
