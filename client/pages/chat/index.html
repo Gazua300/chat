@@ -12,11 +12,19 @@
 </head>
 <body>
     <header>
-        <i  onclick="window.history.back()"
-            class="fa-solid fa-angle-left icon"></i>
-        <h1>Chat</h1>
-        <i  onclick="location.href='../profile/index.html'"
+        <i  
+            onclick="location.href='../profile/index.html'"
             class="fa-solid fa-user icon"></i>
+        <h1>Chat</h1>
+        <i  
+            onclick="logout()"
+            class="fa-solid fa-arrow-right-from-bracket icon"></i>
     </header>
+    <aside class="users">
+        <div class="user-list"></div>
+    </aside>
+    <main></main>
+    <script src="/socket.io/socket.io.js"></script>
 </body>
+<script src="script.js"></script>
 </html>

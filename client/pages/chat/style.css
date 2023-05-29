@@ -3,9 +3,11 @@
 body{
     margin: 0;
     display: grid;
+    height: 100vh;
     grid-template-areas:
-    "header"
-    "main";
+    "header header"
+    "users main";
+    grid-template-columns: 25vw 1fr;
     grid-template-rows: 7vh 1fr;
 }
 
@@ -37,4 +39,24 @@ header .icon{
     @media(max-width: 600px){
         font-size: 1em;
     }
+}
+
+.users{
+    grid-area: users;
+    background-color: green;
+    grid-area: users;
+}
+
+.users .user-list{
+    margin: 10px;
+}
+
+.users .user-list p{
+    display: flex;
+    /* align-items: center; */
+}
+
+.users .user-list img{
+    width: 20px;
+    margin-right: 10px;
 }

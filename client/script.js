@@ -1,6 +1,4 @@
-const email = document.getElementById('email')
-const password = document.getElementById('password')
-// const url = 'https://super-form-server.vercel.app'
+const nickname = document.getElementById('nickname')
 const url = 'http://localhost:3003'
 
 
@@ -16,10 +14,9 @@ document.getElementById('form').addEventListener('submit', (e)=>{
     e.preventDefault()
 
     const body = {
-        email: email.value,
-        password: password.value
+        nickname: nickname.value
     }
-    fetch(`${url}/login`, {
+    fetch(`${url}/signup`, {
         method:'POST',
         headers: {
             'Content-type': 'application/json'
