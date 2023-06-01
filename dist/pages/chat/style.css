@@ -9,6 +9,58 @@ body{
     "users main";
     grid-template-columns: 25vw 1fr;
     grid-template-rows: 7vh 1fr;
+
+    @media(max-width: 600px){
+        margin: 0 20px;
+        grid-template-areas:
+        "header header"
+        "users users"
+        "main main";
+    }
+
+    
+}
+
+#userName{
+    font-family: 'Ysabeau', sans-serif;
+    font-size: 2rem;
+    color: green;
+
+    @media(max-width: 800px){
+        font-size: 1.5rem;
+    }
+}
+
+.logout{
+    position: absolute;
+    font-size: 12pt;
+    top: 1.5vh;
+    left: 21.5vw;
+    cursor: pointer;
+    box-shadow: 3px 3px 6px green;
+    border-radius: 50%;
+    padding: 10px;
+
+    @media(max-width: 800px){
+        left: 19vw;
+        padding: 5px;
+    }
+
+    @media(max-width: 600px){
+        left: 90vw;
+        top: 10vh;
+        font-size: 10pt;
+        padding: 5px;
+    }
+}
+
+.logout:hover{
+    background-color: green;
+    color: white;
+}
+
+.logout:active{
+    transform: scale(0.8);
 }
 
 header{
@@ -16,12 +68,7 @@ header{
     border-bottom: 1px solid;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-
-    @media(max-width: 600px){
-        height: 5vh;
-    }
+    justify-content: center;
 }
 
 header h1{
@@ -32,22 +79,65 @@ header h1{
     }
 }
 
-header .icon{
-    font-size: 2em;
-    cursor: pointer;
+aside .userHeader{
+    border-bottom: 1px solid;
+    border-bottom-left-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 10px 20px;
+    margin-bottom: 7vh;
 
     @media(max-width: 600px){
-        font-size: 1em;
+        margin-bottom: 2vh;
     }
+
+    @media(max-width: 800px){
+        height: 10vh;
+        margin-top: 3vh;
+    }    
 }
 
-aside .icon{
-    background-color: yellowgreen;
+aside .userHeader .icon{
     box-shadow: 3px 3px 6px green;
     border-radius: 50%;
     padding: 10px;
     font-size: 2em;
-    margin: 20px;
+    cursor: pointer;
+
+    @media(max-width: 600px){
+        font-size: 12pt;
+    }
+
+    @media(max-width: 800px){
+        font-size: 10pt;
+    }
+}
+
+#imgProfile{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 3px 3px 6px;
+
+    @media(max-width: 800px){
+        width: 40px;
+        height: 40px;
+    }
+}
+
+#imgProfile:active{
+    transform: scale(0.8);
+}
+
+aside .icon:hover{
+    background-color: green;
+    color: white;
+}
+
+aside .icon:active{
+    transform: scale(0.8);
 }
 
 .users{
@@ -57,15 +147,33 @@ aside .icon{
 
 .users .user-list{
     margin: 10px;
+
+    @media(max-width: 600px){
+        overflow: auto;
+        display: flex;
+        gap: 10px;
+    }
 }
 
 .users .user-list p{
     display: flex;
 }
 
-.users .user-list img{
-    width: 20px;
-    margin-right: 10px;
+.users .user-list .icon{
+    background-color: yellowgreen;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+.user-list .icon:hover{
+    background-color: green;
+    box-shadow: 3px 3px 6px green;
+}
+
+.user-list .user{
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
 }
 
 
@@ -89,7 +197,7 @@ main{
 
 .messageContainer{
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-end;    
 }
 
 .message{
@@ -99,14 +207,30 @@ main{
     border: 1px solid;
     border-radius: 10px;
     box-shadow: 3px 3px 6px;
+
+    @media(max-width: 800px){
+        width: 30vw;
+    }
+    @media(max-width: 600px){
+        width: 60vw;
+    }
 }
 
 .left{
     justify-content: flex-start;
+
+    @media(max-width: 600px){
+        margin-left: -5vw;
+    }
 }
 
-.left .foreign{
-    
+.right{
+    /* @media(max-width: 600px){
+        position: relative;
+        left: 27vw;
+    } */
+    position: relative;
+    left: 20vw;
 }
 
 .messageInfo{
@@ -116,6 +240,10 @@ main{
 
 .bottomNavigation input[type='text']{
     width: 90%;
+
+    @media(max-width: 600px){
+        width: 84vw;
+    }
 }
 
 .bottomNavigation button{

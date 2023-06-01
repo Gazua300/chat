@@ -7,14 +7,14 @@ const { Server } = require('socket.io')
 const con = require('./sources/connection/connection')
 
 
-//SOCKET CONNECTION
+// SOCKET CONNECTION
 const options = {
     cors: true,
-    origin: ['http://localhost:3003']
+    origin: ['https://chat-0q7t.onrender.com']
 }
 
 const server = app.listen(3003, ()=>{
-    console.log('Servidor rondando em http://localhost:3003')
+    console.log('Servidor rondando em na porta 3003')
 })
 
 const io = new Server(server, options)
@@ -27,13 +27,16 @@ io.on('connection', socket=>{
     socket.join('room1')
     socket.on('message', message=>{
         io.to('room1').emit('receivedMessage', {
-            userId: socket.id,
-            message: message
+            sender: message.sender,
+            message: message.message
         })
     })   
 })
 
-
+// SHOW PAGES
+app.get('/', (req, res)=>{
+    res.sendFile('index.html')
+})
 
 // =================ENTER WITH USER============================
 app.post('/signup', (req, res)=>{
@@ -43,9 +46,13 @@ app.post('/signup', (req, res)=>{
                            
     con.query(sql, [id, nickname], error=>{
         if(error){
-            res.status(500).send(`Falha ao registrar usuário: ${error}`)
+            if(error.code === 'ER_DUP_ENTRY'){
+                res.status(406).send(`Jà existe um usuário com esse nome`)
+            }else{
+                res.status(500).send(`Falha so registrar usuário: ${error}`)
+            }
         }else{
-            res.status(201).send({id, nickname})                    
+            res.status(201).send(nickname)                    
         }
     })
 })
@@ -77,9 +84,9 @@ app.patch('/changeid/:name', (req, res)=>{
 })
 
 // =========================GET USER BY NAME========================
-app.get('/user/:id', (req, res)=>{
+app.get('/user/:name', (req, res)=>{
     con.query(`
-        SELECT * FROM chat_users WHERE id = '${req.params.id}'
+        SELECT * FROM chat_users WHERE nickname = '${req.params.name}'
     `, (error, user)=>{
         if(error){
             res.status(500).send()
@@ -91,10 +98,11 @@ app.get('/user/:id', (req, res)=>{
 
 // ===========================SEND MESSAGES========================
 app.post('/messages', (req, res)=>{
-    const { sender, message } = req.body    
+    const { id, sender, message, sentAt } = req.body    
+    console.log("backend: ",req.body)
     const getuser = `SELECT * FROM chat_users WHERE nickname = '${sender}'`
-    const sql = `INSERT INTO chat_messages VALUES(?,?,?)`
-    const id = Date.now().toString(18)
+    const sql = `INSERT INTO chat_messages VALUES(?,?,?,?)`
+    // const id = Date.now().toString(18)
 
 
     con.query(getuser, (error, user)=>{
@@ -102,7 +110,7 @@ app.post('/messages', (req, res)=>{
             res.status(404).send(`Usuário não encontrado: ${error}`)
         }else{
             if(user.length > 0){
-                con.query(sql, [id, user[0].nickname, message], error=>{
+                con.query(sql, [id, user[0].nickname, message, sentAt], error=>{
                     if(error){
                         res.status(500).send(`Falha ao enviar messagem: ${error}`)
                     }else{
@@ -142,9 +150,9 @@ app.delete('/signout/:name', (req, res)=>{
                 if(error){
                     res.status(500).send(`Erro ao deslogar usuário: ${error}`)
                 }else{
-                    con.query(`
-                        DELETE FROM chat_messages WHERE sender = '${user[0].nickname}'
-                    `)
+                    // con.query(`
+                    //     DELETE FROM chat_messages WHERE sender = '${user[0].nickname}'
+                    // `)
                     res.send(`${user[0].nickname} deslogado`)
                 }
             })
