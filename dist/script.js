@@ -1,5 +1,5 @@
 const nickname = document.getElementById('nickname')
-const url = 'https://chat-0q7t.onrender.com'
+const url = 'https://chat-production-7a8f.up.railway.app'
 // const url = 'http://localhost:3003'
 
 
