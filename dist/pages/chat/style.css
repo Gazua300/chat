@@ -11,35 +11,36 @@ body{
     grid-template-rows: 7vh 1fr;
 
     @media(max-width: 600px){
-        margin: 0 20px;
-        grid-template-areas:
-        "header header"
-        "users users"
-        "main main";
+        display: flex;
+        flex-direction: column;
     }
-
-    
 }
 
-#userName{
-    font-family: 'Ysabeau', sans-serif;
-    font-size: 2rem;
-    color: green;
 
-    @media(max-width: 800px){
-        font-size: 1.5rem;
+header{
+    grid-area: header;
+    border-bottom: 1px solid;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-right: 15px;
+}
+
+header h1{
+    font-family: 'Ysabeau', sans-serif;
+
+    @media(max-width: 600px){
+        font-size: 1.2em;
+        padding: 0;
     }
 }
 
 .logout{
-    position: absolute;
     font-size: 12pt;
-    top: 1.5vh;
-    left: 21.5vw;
     cursor: pointer;
     box-shadow: 3px 3px 6px green;
     border-radius: 50%;
-    padding: 10px;
+    padding: 5px;
 
     @media(max-width: 800px){
         left: 19vw;
@@ -63,39 +64,30 @@ body{
     transform: scale(0.8);
 }
 
-header{
-    grid-area: header;
-    border-bottom: 1px solid;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-header h1{
-    font-family: 'Ysabeau', sans-serif;
-
-    @media(max-width: 600px){
-        font-size: 1em;
-    }
+aside{
+    grid-area: users;
+    border-right: 1px solid;
+    display: grid;
+    grid-template-areas:
+    "userHeader"
+    "usersList";
+    grid-template-rows: 15vh 1fr;
 }
 
 aside .userHeader{
+    grid-area: userHeader;
     border-bottom: 1px solid;
     border-bottom-left-radius: 10px;
     display: flex;
     align-items: center;
     gap: 20px;
     padding: 20px 10px 20px;
-    margin-bottom: 7vh;
 
     @media(max-width: 600px){
-        margin-bottom: 2vh;
+        padding: 10px 5px 10px;
+        border-bottom-left-radius: 0;        
     }
-
-    @media(max-width: 800px){
-        height: 10vh;
-        margin-top: 3vh;
-    }    
 }
 
 aside .userHeader .icon{
@@ -114,7 +106,17 @@ aside .userHeader .icon{
     }
 }
 
-#imgProfile{
+
+aside .userHeader .icon:hover{
+    background-color: green;
+    color: white;
+}
+
+aside .userHeader .icon:active{
+    transform: scale(0.8);
+}
+
+aside .userHeader #imgProfile{
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -127,50 +129,48 @@ aside .userHeader .icon{
     }
 }
 
-#imgProfile:active{
+aside .userHeader #imgProfile:active{
     transform: scale(0.8);
 }
 
-aside .icon:hover{
-    background-color: green;
-    color: white;
+aside .userHeader #userName{
+    font-family: 'Ysabeau', sans-serif;
+    font-size: 2rem;
+    color: green;
+
+    @media(max-width: 800px){
+        font-size: 1.5rem;
+    }
 }
 
-aside .icon:active{
-    transform: scale(0.8);
-}
-
-.users{
-    grid-area: users;
-    border-right: 1px solid;
-}
-
-.users .user-list{
-    margin: 10px;
+aside .user-list{
+    grid-area: usersList;
+    overflow: auto;
+    padding-left: 10px;
 
     @media(max-width: 600px){
-        overflow: auto;
         display: flex;
         gap: 10px;
     }
 }
 
-.users .user-list p{
-    display: flex;
-}
-
-.users .user-list .icon{
+aside .user-list .icon{
     background-color: yellowgreen;
     padding: 10px;
     border-radius: 50%;
 }
 
-.user-list .icon:hover{
+aside .user-list .icon:hover{
     background-color: green;
     box-shadow: 3px 3px 6px green;
+    color: white;
 }
 
-.user-list .user{
+aside .user-list .icon:active{
+    transform: scale(0.8);
+}
+
+aside .user-list .user{
     align-items: center;
     gap: 10px;
     cursor: pointer;
@@ -178,21 +178,30 @@ aside .icon:active{
 
 
 main{
+    grid-area: main;
     display: grid;
     grid-template-areas: 
     "messages"
     "input";
-    grid-template-rows: 1fr 5vh;
+    grid-template-rows: 1fr 7vh;
+    
+    @media(max-width: 600px){
+        height: 100vh;
+    }
 }
 
 .messages{
     grid-area: messages;
+    overflow-y: auto;
+    background-image: url('https://wallpapercave.com/wp/wp4410716.jpg');
 }
 
 .bottomNavigation{
     grid-area: input;
-    display: flex;    
-    justify-content: space-between;
+    display: flex;
+    align-items: center;    
+    justify-content: space-around;
+    margin: 0 10px;
 }
 
 .messageContainer{
@@ -225,10 +234,6 @@ main{
 }
 
 .right{
-    /* @media(max-width: 600px){
-        position: relative;
-        left: 27vw;
-    } */
     position: relative;
     left: 20vw;
 }
@@ -239,7 +244,13 @@ main{
 }
 
 .bottomNavigation input[type='text']{
-    width: 90%;
+    width: 85%;
+    height: 30px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    box-shadow: 2px 2px 4px;
+    padding-left: 15px;
 
     @media(max-width: 600px){
         width: 84vw;
@@ -247,6 +258,20 @@ main{
 }
 
 .bottomNavigation button{
-    right: 0;
-    width: 10%;
+    display: flex;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.bottomNavigation #sendMessage{
+    font-size: 18pt;
+    color: green;    
+}
+
+.bottomNavigation #sendMessage:active{
+    font-size: 15pt;
 }

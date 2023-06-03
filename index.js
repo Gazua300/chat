@@ -10,7 +10,8 @@ const con = require('./sources/connection/connection')
 // SOCKET CONNECTION
 const options = {
     cors: true,
-    origin: ['https://chat-0q7t.onrender.com']
+    origin: ['https://chat-production-6117.up.railway.app']
+    // origin: ['http://localhost:3003']
 }
 
 const server = app.listen(3003, ()=>{
@@ -38,23 +39,36 @@ app.get('/', (req, res)=>{
     res.sendFile('index.html')
 })
 
+var statusCode = 400
+
 // =================ENTER WITH USER============================
 app.post('/signup', (req, res)=>{
-    const { nickname } = req.body
-    const sql = `INSERT INTO chat_users VALUES(?,?)`
-    const id = Date.now().toString(18)
-                           
-    con.query(sql, [id, nickname], error=>{
-        if(error){
-            if(error.code === 'ER_DUP_ENTRY'){
-                res.status(406).send(`Jà existe um usuário com esse nome`)
-            }else{
-                res.status(500).send(`Falha so registrar usuário: ${error}`)
-            }
+    try{
+
+        const { nickname } = req.body
+        const sql = `INSERT INTO chat_users VALUES(?,?)`
+        const id = Date.now().toString(18)
+
+        if(!nickname){
+            statusCode = 401
+            throw new Error('Digite um nome de usuário')
         }else{
-            res.status(201).send(nickname)                    
+            con.query(sql, [id, nickname], error=>{
+                if(error){
+                    if(error.code === 'ER_DUP_ENTRY'){
+                        res.status(406).send(`Jà existe um usuário com esse nome`)
+                    }else{
+                        res.status(500).send(`Falha so registrar usuário: ${error}`)
+                    }
+                }else{
+                    res.status(201).send(nickname)                    
+                }
+            })
         }
-    })
+                            
+    }catch(e){
+        res.status(statusCode).send(e.message || e.sqlMessage )
+    }    
 })
 
 // =======================SELECT ALL USERS=================================
